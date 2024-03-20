@@ -1,0 +1,15 @@
+{
+    "name": "lucas/oop-php-2",
+    "autoload": {
+        "psr-4": {
+            "Lucas\\OopPhp2\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "lucastanis",
+            "email": "9019395@student.zadkine.nl"
+        }
+    ],
+    "require": {}
+}
