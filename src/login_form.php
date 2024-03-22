@@ -1,12 +1,16 @@
 <?php
-    require_once '../vendor/autoload.php';
+	// Functie: Loginformulier
+    // Auteur: Lucas Tanis
 
-    use Opdracht6a\classes\User;
+	// Inclusief benodigde bestanden
+	// require_once('classes/user.php');
+	require_once "../vendor/autoload.php";
+    use Opdracht6Login\classes\User;
+
 	
-	// Is de login button aangeklikt?
+	// Is de inlogknop geklikt?
 	if(isset($_POST['login-btn']) ){
-
-		require_once('classes/user.php');
+		
 		$user = new User();
 
 		$user->username = $_POST['username'];
@@ -14,20 +18,20 @@
 
 		$user->ShowUser();
 
-		// Validatie gegevens
+		// Valideren van gegevens
 		$errors = $user->ValidateUser();
 
-		// Indien geen fouten dan inloggen
+		// Indien geen fouten, dan inloggen
 		if(count($errors)== 0){
-			//Inlogen
+			// Inloggen
 			if ($user->LoginUser()){
-				echo "Login ok";
-				// Ga naar pagina??
+				echo "Inloggen gelukt";
+				// Doorsturen naar pagina??
 				header("location: index.php");
 			} else
 			{
-				array_push($errors, "Login mislukt");
-				echo "Login NOT ok";
+				array_push($errors, "Inloggen mislukt");
+				echo "Inloggen NIET gelukt";
 			}
 		}
 
@@ -47,27 +51,27 @@
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 	<head>
 	</head>
 <body>
 
-	<h3>PHP - PDO Login and Registration</h3>
+	<h3>PHP - PDO Inloggen en Registreren</h3>
 	<hr/>
 	
 	<form action="" method="POST">	
-		<h4>Login here...</h4>
+		<h4>Hier inloggen...</h4>
 		<hr>
 		
-		<label>Username</label>
+		<label>Gebruikersnaam</label>
 		<input type="text" name="username" />
 		<br>
-		<label>Password</label>
+		<label>Wachtwoord</label>
 		<input type="password" name="password" />
 		<br>
-		<button type="submit" name="login-btn">Login</button>
+		<button type="submit" name="login-btn">Inloggen</button>
 		<br>
-		<a href="register_form.php">Registration</a>
+		<a href="register_form.php">Registratie</a>
 	</form>
 		
 </body>

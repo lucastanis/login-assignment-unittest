@@ -1,43 +1,52 @@
 <?php
+    // Functie: Databaseverbinding
+    // Auteur: Lucas Tanis
 
-namespace Opdracht6a\classes;
+    namespace Opdracht6Login\classes;
 
-use PDO;
-use PDOExecption;
+    use \PDO;
+    use \PDOException;
 
-class Database {
-    private $pdo;
-    private $host;
-    private $database;
-    private $username;
-    private $password;
+    class Database{
 
-    public function __construct($host, $database, $username, $password) {
-        $this->host = $host;
-        $this->username = $username;
-        $this->password = $password;
-        $this->database = $database;
-        $this->connect();
-    }
+        private $username = "root";
+        private $password = "";
+        private $dbname = "login";
+        private $hostname = "localhost";
+        private $conn;
 
-    private function connect() {
-        try {
-            $this->pdo = new PDO("mysql:host={$this->host};dbname={$this->database}", $this->username, $this->password);
-            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (PDOException $e) {
-            die("Connection failed: " . $e->getMessage());
+
+        public function __construct()
+        {
+            try {
+                $this->conn = new PDO("mysql:host=$this->hostname;dbname=$this->dbname", $this->username, $this->password);
+                $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                $this->conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+            }
+            catch(PDOException $e) {
+                echo "Verbinding mislukt: " . $e->getMessage();
+            }
+        }
+
+        public function GetData($sql, $params = array()){
+            $result = [];
+
+            try {
+                if(!$this->conn) {
+                    $this->__construct();
+                }
+
+                $query = $this->conn->prepare($sql);
+                $query->execute($params);
+                $result = $query->fetchAll();
+            } catch(PDOException $e) {
+                echo "Fout: " . $e->getMessage();
+            }
+
+            return $result;
         }
     }
 
-    public function executeQuery($query, $params = array()) {
-        try {
-            $statement = $this->pdo->prepare($query);
-            $statement->execute($params);
-            return $statement;
-        } catch (PDOException $e) {
-            die("Query execution failed: " . $e->getMessage());
-        }
-    }
-}
+
 
 ?>

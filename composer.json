@@ -1,15 +1,17 @@
 {
-    "name": "lucas/oop-php-2",
+    "name": "gebruiker/opdracht_6_login",
+    "require": {
+        "phpunit/phpunit": "^10.5"
+    },
     "autoload": {
         "psr-4": {
-            "Lucas\\OopPhp2\\": "src/"
+            "Opdracht6Login\\": "src/"
         }
     },
     "authors": [
         {
-            "name": "lucastanis",
-            "email": "9019395@student.zadkine.nl"
+            "name": "MaohuaFan",
+            "email": "9019910@student.zadkine.nl"
         }
-    ],
-    "require": {}
+    ]
 }
