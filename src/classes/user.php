@@ -29,7 +29,7 @@
             $errors=[];
             if($this->username != "" || $this->password != ""){ 
 
-                if ($this->username != "") { // Check if the username is provided
+                if ($this->username != "") {
                     $sql = "SELECT * FROM `user` WHERE `username` = :username";
                     $params = [':username' => $this->username];
                     $existingUser = $this->GetData($sql, $params);
@@ -37,8 +37,6 @@
                     if ($existingUser) {
                         array_push($errors, "Username bestaat al.");
                     } else {
-                        // Manier 1
-                        // Username opslaan in tabel login
                         $sql = "INSERT INTO `user` (`username`, `password`, `role`) VALUES (:username, :password, '')";
                         $params = [
                             ':username' => $this->username,
@@ -86,53 +84,41 @@
             ];
             $userData = $this->GetData($sql, $params);
         
-            // Indien gevonden dan sessie vullen
             if ($userData) {
-                // Check if a session is already active
                 if (session_status() == PHP_SESSION_NONE) {
                     session_start();
                 }
         
-                // Populate the session with user data
                 $_SESSION['username'] = $this->username;
         
-                // Indicate successful login
                 return true;
             } else {
-                // Indicate failed login attempt
                 return false;
             }
         }
         
-        // Check if the user is already logged in
         public function IsLoggedin() {
-            // Check if a session is already active
             if (session_status() == PHP_SESSION_NONE) {
                 session_start();
             }
-            // Check if user session has been set
             return isset($_SESSION['username']);
         }
         
         public function GetUser($username){
-            // Doe SELECT * from user WHERE username = $username
             $sql = "SELECT * FROM `user` WHERE `username` = :username";
             $params = [':username' => $username];
             $userData = $this->GetData($sql, $params);
         
             if ($userData) {
-                // Indien gevonden eigenschappen vullen met waarden uit de SELECT
                 $this->username = $userData[0]['username'];
-                $this->password = $userData[0]['password']; // Set the password property
-                $this->email = $userData[0]['email']; // Set the email property
-        
-                // Set session variables if needed
+                $this->password = $userData[0]['password']; 
+                $this->email = $userData[0]['email']; 
                 $_SESSION['username'] = $this->username;
                 $_SESSION['email'] = $this->email;
         
-                return true; // Return true to indicate user found
+                return true;
             } else {
-                return false; // Return false to indicate user not found
+                return false; 
             }
         }
         
@@ -142,13 +128,10 @@
 
         public function Logout(){
             session_start();
-            // remove all session variables
             session_unset();
         
-            // destroy the session
             session_destroy();
             
-            #header('location: index.php');
         }
     }
 ?>

@@ -5,6 +5,8 @@
 use \PHPUnit\Framework\TestCase;
 use Opdracht6Login\classes\User;
 
+require 'vendor/autoload.php';
+
 class LoginTest extends TestCase
 {
     protected $user;

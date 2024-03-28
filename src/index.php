@@ -1,6 +1,6 @@
 <?php
     // Functie: Inlogprogramma OOP 
-    // Auteur: Younes Et-Talby
+    // Auteur: Lucas Tanis
 
 	// Inclusief benodigde bestanden
 	// require_once('classes/user.php');
@@ -29,24 +29,18 @@
 		// Maak een User object
 		$user = new User();
 
-		// Als Uitloggen is geklikt
 		if (isset($_GET['logout']) && $_GET['logout'] == 'true') {
-			$user->Logout(); // Roep de Logout methode aan
+			$user->Logout(); 
 		}
+		
 
-		// Controleer inlogsessie: is de gebruiker ingelogd?
 		if(!$user->IsLoggedin()){
-			// Toon melding als niet ingelogd
 			echo "U bent niet ingelogd. Log in om verder te gaan.<br><br>";
-			// Toon inlogknop
 			echo '<a href = "login_form.php">Login</a>';
 		} else {
 			
-			// Selecteer gebruikersgegevens uit database
-			// $user->GetUser($user->username);
 			$user->GetUser($_SESSION['username']);
 			
-			// Toon gebruikersgegevens
 			echo "<h2>Laat het spel beginnen</h2>";
 			echo "U bent ingelogd als:<br/>";
 			$user->ShowUser();
